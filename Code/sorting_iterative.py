@@ -6,6 +6,7 @@ def is_sorted(items):
     Running time: O(n) because at most loop through the entire array
     Memory usage: O(1) because not creating any new space and everything is done in place"""
     for i in range(len(items) - 1):
+        # if next item is smaller than current, then list not sorted
         if items[i+1] < items[i]:
             return False
     return True
@@ -28,6 +29,7 @@ def bubble_sort(items):
             if items[i+1] < items[i]:
                 items[i], items[i+1] = items[i+1], items[i]
                 swap = True
+        #the while loop breaks if during this pass there was not a swap
         if not swap:
             break
         array_length -= 1
@@ -48,8 +50,14 @@ def selection_sort(items):
         lowest_index = start_index
         for i in range(start_index, len(items) - 1):
             if items[i] < items[start_index]:
+                # lowest index gets updated and settles with the lowest index of lowest value
                 lowest_index = i
         start_index += 1
+    # performs the swap
+    items[start_index], items[lowest_index] = items[lowest_index], items[start_index]
+
+    # moves the pointer one up
+    start_index += 1
 
     return items
 
