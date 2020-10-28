@@ -19,8 +19,6 @@ def bubble_sort(items):
     repeating until all items are in sorted order.
     Running time: o(n^2) because as the input grows so does both of the loops
     Memory usage: O(1) because not creating any new space and everything is done in place"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Swap adjacent items that are out of order
     array_length = len(items) - 1
     
     # goes through the list and looks at the next item and if it's smaller than current item then swap, else it continues down the list. The loop is repeated however many times it needs to and stops when no swapping occurs. 
@@ -44,9 +42,6 @@ def selection_sort(items):
     unsorted item, and repeating until all items are in sorted order.
     Running time: O(n^2) because as the numbers of items grow the so does the outter and inner loop
     Memory usage: O(1) because as items grow no additional spaces are created and everything done in place"""
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Find minimum item in unsorted items
-    # TODO: Swap it with first unsorted item
 
     # pseudo seperates list into 2 sections, sorted and unsorted, goes through the unsorted section and finds the index with lowest value among all and swaps it with the sorted section
     start_index = 0
@@ -89,6 +84,6 @@ def insertion_sort(items):
             if items[j] >= items[i]:
                 removed_item = items.pop(i)
                 items.insert(j, removed_item)
-                # can break cause this part of the list is sorted, which means everything after will be much larger than selected item
+                # can continue/skip loop cause this part of the list is sorted, which means everything after will be much larger than selected item
                 continue
     return items
