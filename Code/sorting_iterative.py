@@ -23,13 +23,14 @@ def bubble_sort(items):
     # TODO: Swap adjacent items that are out of order
     array_length = len(items) - 1
     
+    # goes through the list and looks at the next item and if it's smaller than current item then swap, else it continues down the list. The loop is repeated however many times it needs to and stops when no swapping occurs. 
     while array_length > 0:
         swap = False
         for i in range(array_length):
             if items[i+1] < items[i]:
                 items[i], items[i+1] = items[i+1], items[i]
                 swap = True
-        #the while loop breaks if during this pass there was not a swap
+        # the while loop breaks if during this pass there was not a swap
         if not swap:
             break
         array_length -= 1
@@ -45,12 +46,14 @@ def selection_sort(items):
     # TODO: Repeat until all items are in sorted order
     # TODO: Find minimum item in unsorted items
     # TODO: Swap it with first unsorted item
+
+    # pseudo seperates list into 2 sections, sorted and unsorted, goes through the unsorted section and finds the index with lowest value among all and swaps it with the sorted section
     start_index = 0
     while start_index < len(items) - 1:
         lowest_index = start_index
         for i in range(start_index, len(items) - 1):
             if items[i] < items[start_index]:
-                # lowest index gets updated and settles with the lowest index of lowest value
+                # lowest_index gets updated and settles with the lowest index of lowest value
                 lowest_index = i
         start_index += 1
     # performs the swap
@@ -65,8 +68,24 @@ def selection_sort(items):
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n) because as items grow outter and inner loop both increases
+    Memory usage: O(1) because everything is done in place """
     # TODO: Repeat until all items are in sorted order
     # TODO: Take first unsorted item
     # TODO: Insert it in sorted order in front of items
+
+    # similar to selection sort where list is pseudo broken into 'sorted' and 'unsorted' sections
+    # an item is selected from 'unsorted' and checks against the 'sorted' section to see where to add
+
+    # this is our selection section of the list
+    for i in range(1, len(items)):
+        # range is non inclusive so i is never reached only i-1
+        # loop through our 'sorted' section
+        for j in range(0, i):
+            # the moment it finds an item in this part of the list is greater or equal it removes from the 'unsorted' section and inserts it into the 'sorted' section
+            if items[j] >= items[i]:
+                removed_item = items.pop(i)
+                items.insert(j, removed_item)
+                # can break cause this part of the list is sorted, which means everything after will be much larger than selected item
+                continue
+    return items
