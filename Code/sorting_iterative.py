@@ -24,6 +24,7 @@ def bubble_sort(items):
     array_length = len(items) - 1
     
     # goes through the list and looks at the next item and if it's smaller than current item then swap, else it continues down the list. The loop is repeated however many times it needs to and stops when no swapping occurs. 
+    # the number of passes that needs to go before instance of no swap or go through each item with one pass
     while array_length > 0:
         swap = False
         for i in range(array_length):
@@ -49,8 +50,10 @@ def selection_sort(items):
 
     # pseudo seperates list into 2 sections, sorted and unsorted, goes through the unsorted section and finds the index with lowest value among all and swaps it with the sorted section
     start_index = 0
+    # this is 'sorted' section
     while start_index < len(items) - 1:
         lowest_index = start_index
+        # this is 'unsorted' section
         for i in range(start_index, len(items) - 1):
             if items[i] < items[start_index]:
                 # lowest_index gets updated and settles with the lowest index of lowest value
@@ -82,7 +85,7 @@ def insertion_sort(items):
         # range is non inclusive so i is never reached only i-1
         # loop through our 'sorted' section
         for j in range(0, i):
-            # the moment it finds an item in this part of the list is greater or equal it removes from the 'unsorted' section and inserts it into the 'sorted' section
+            # the moment it finds an item in this part of the list which is greater or equal 'unsorted' selected item, it is removed from the 'unsorted' section and inserted into the 'sorted' section
             if items[j] >= items[i]:
                 removed_item = items.pop(i)
                 items.insert(j, removed_item)
