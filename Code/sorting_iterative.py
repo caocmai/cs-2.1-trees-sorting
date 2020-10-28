@@ -11,9 +11,6 @@ def is_sorted(items):
             return False
     return True
 
-    # TODO: Check that all adjacent items are in order, return early if so
-
-
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
@@ -48,17 +45,20 @@ def selection_sort(items):
     # this is 'sorted' section
     while start_index < len(items) - 1:
         lowest_index = start_index
+        lowest_value = items[lowest_index]
         # this is 'unsorted' section
-        for i in range(start_index, len(items) - 1):
-            if items[i] < items[start_index]:
+        for i in range(start_index, len(items)):
+            if items[i] <= lowest_value:
                 # lowest_index gets updated and settles with the lowest index of lowest value
                 lowest_index = i
+                lowest_value = items[i]
+        # performs the swap
+        items[start_index], items[lowest_index] = items[lowest_index], items[start_index]
         start_index += 1
-    # performs the swap
-    items[start_index], items[lowest_index] = items[lowest_index], items[start_index]
 
-    # moves the pointer one up
-    start_index += 1
+
+    # # moves the pointer one up
+    # start_index += 1
 
     return items
 
