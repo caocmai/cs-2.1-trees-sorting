@@ -41,27 +41,26 @@ def selection_sort(items):
     Memory usage: O(1) because as items grow no additional spaces are created and everything done in place"""
 
     # pseudo seperates list into 2 sections, sorted and unsorted, goes through the unsorted section and finds the index with lowest value among all and swaps it with the sorted section
-    start_index = 0
+
+    ## can use while or for outter loop
+    # i = 0
     # this is 'sorted' section
-    while start_index < len(items) - 1:
-        lowest_index = start_index
+    # while i < len(items) - 1:
+    for i in range(len(items)-1):
+        lowest_index = i
         lowest_value = items[lowest_index]
         # this is 'unsorted' section
-        for i in range(start_index, len(items)):
-            if items[i] <= lowest_value:
+        for j in range(lowest_index + 1, len(items)):
+            if items[j] < lowest_value:
                 # lowest_index gets updated and settles with the lowest index of lowest value
-                lowest_index = i
-                lowest_value = items[i]
+                lowest_index = j
+                lowest_value = items[j]
         # performs the swap
-        items[start_index], items[lowest_index] = items[lowest_index], items[start_index]
-        start_index += 1
-
-
-    # # moves the pointer one up
-    # start_index += 1
+        items[i], items[lowest_index] = items[lowest_index], items[i]
+        # moves pointer up
+        # i += 1
 
     return items
-
 
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
