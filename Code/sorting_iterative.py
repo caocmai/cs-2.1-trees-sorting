@@ -14,7 +14,7 @@ def is_sorted(items):
 def bubble_sort(items):
     """Sort given items by swapping adjacent items that are out of order, and
     repeating until all items are in sorted order.
-    Running time: o(n^2) because as the input grows so does both of the loops
+    Running time: O(n^2) because as the input grows so does both of the loops
     Memory usage: O(1) because not creating any new space and everything is done in place"""
     array_length = len(items) - 1
     
@@ -37,7 +37,7 @@ def bubble_sort(items):
 def selection_sort(items):
     """Sort given items by finding minimum item, swapping it with first
     unsorted item, and repeating until all items are in sorted order.
-    Running time: O(n^2) because as the numbers of items grow the so does the outter and inner loop
+    Running time: O(n^2) because as the numbers of items grow the so does the outter and inner loop, also the function increases in a quadratic way
     Memory usage: O(1) because as items grow no additional spaces are created and everything done in place"""
 
     # pseudo seperates list into 2 sections, sorted and unsorted, goes through the unsorted section and finds the index with lowest value among all and swaps it with the sorted section
@@ -65,11 +65,8 @@ def selection_sort(items):
 def insertion_sort(items):
     """Sort given items by taking first unsorted item, inserting it in sorted
     order in front of items, and repeating until all items are in order.
-    Running time: O(n) because as items grow outter and inner loop both increases
+    Running time: O(n^2) because as items grow outter and inner loop both increases, also the function increases in a quadratic way
     Memory usage: O(1) because everything is done in place """
-    # TODO: Repeat until all items are in sorted order
-    # TODO: Take first unsorted item
-    # TODO: Insert it in sorted order in front of items
 
     # similar to selection sort where list is pseudo broken into 'sorted' and 'unsorted' sections
     # an item is selected from 'unsorted' and checks against the 'sorted' section to see where to add
