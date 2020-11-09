@@ -31,6 +31,15 @@ def merge_sort(items):
     # TODO: Split items list into approximately equal halves
     # TODO: Sort each half by recursively calling merge sort
     # TODO: Merge sorted halves into one list in sorted order
+    if len(items) == 1:
+        return items
+    mid = len(items) // 2
+
+    left = items[0:mid+1]
+    right = items[mid+1:]
+
+    merge_sort(left)
+    merge_sort(right)
 
 
 def partition(items, low, high):
