@@ -9,6 +9,17 @@ def merge(items1, items2):
     # TODO: Repeat until one list is empty
     # TODO: Find minimum item in both lists and append it to new list
     # TODO: Append remaining items in non-empty list to new list
+    result = []
+    index_left = 0
+    index_right = 0
+    
+    while index_left < len(items1) & index_right < len(items2):
+        if items1[index_left] < items2[index_right]:
+            result.append(items1[index_left])
+            index_left += 1
+        else:
+            result.append(items2[index_right])
+            index_right += 1
 
 
 def split_sort_merge(items):
@@ -38,8 +49,7 @@ def merge_sort(items):
     left = items[0:mid+1]
     right = items[mid+1:]
 
-    merge_sort(left)
-    merge_sort(right)
+    return merge(merge_sort(left), merge_sort(right))
 
 
 def partition(items, low, high):
