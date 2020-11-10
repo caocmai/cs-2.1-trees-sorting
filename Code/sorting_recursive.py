@@ -13,7 +13,7 @@ def merge(items1, items2):
     index_left = 0
     index_right = 0
     
-    while index_left < len(items1) & index_right < len(items2):
+    while index_left < len(items1) and index_right < len(items2):
         if items1[index_left] < items2[index_right]:
             result.append(items1[index_left])
             index_left += 1
@@ -21,17 +21,10 @@ def merge(items1, items2):
             result.append(items2[index_right])
             index_right += 1
 
+    result.extend(items1[index_left:])
+    result.extend(items2[index_right:])
 
-def split_sort_merge(items):
-    """Sort given items by splitting list into two approximately equal halves,
-    sorting each with an iterative sorting algorithm, and merging results into
-    a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half using any other sorting algorithm
-    # TODO: Merge sorted halves into one list in sorted order
-
+    return result
 
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
@@ -44,13 +37,15 @@ def merge_sort(items):
     # TODO: Merge sorted halves into one list in sorted order
     if len(items) == 1:
         return items
-    mid = len(items) // 2
 
-    left = items[0:mid+1]
-    right = items[mid+1:]
+    mid = len(items) // 2
+    left = items[0:mid]
+    right = items[mid:]
 
     return merge(merge_sort(left), merge_sort(right))
-
+    
+items = 'one fish two fish red fish blue fish'.split()
+print(merge_sort(items))
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
