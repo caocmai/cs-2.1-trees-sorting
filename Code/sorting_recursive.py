@@ -11,7 +11,7 @@ def merge(items1, items2):
     index_items1 = 0
     index_items2 = 0
     
-    # comparing both lists and adding the element to the merge_list or know the point where both list are in order, this loop stops when you have completely travase one of the arrays to merge
+    # comparing both lists and adding the element to the merge_list or/and to know the point where both list are in order correctly, this loop stops when you have completely traverse one of the arrays to merge
     while index_items1 < len(items1) and index_items2 < len(items2):
         # compare the two sorted arrays, items1 and items2
         if items1[index_items1] < items2[index_items2]:
@@ -32,7 +32,7 @@ def merge(items1, items2):
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    Running time: O(nlogn) becuase breaking the list down every time; divide and conquer
+    Running time: O(nlogn) because breaking the list down every recursive call; divide and conquer
     Memory usage: O(n) because calling function resursively so just grows linearyly with input"""
 
     if items == []:
@@ -41,15 +41,15 @@ def merge_sort(items):
     # base case in recursive call
     if len(items) == 1:
         return items
+    else: # not necessary cause then return is run the function stops but helpful to understand
+        mid = len(items) // 2
+        left = items[0:mid]
+        right = items[mid:]
 
-    mid = len(items) // 2
-    left = items[0:mid]
-    right = items[mid:]
-
-    # return merge(merge_sort(left), merge_sort(right))
-    # this so it's manipulating the items array instead of returning a new array
-    items[:] = merge(merge_sort(left), merge_sort(right))
-    return items[:]
+        # return merge(merge_sort(left), merge_sort(right))
+        # items[:] = this so it's manipulating the items array instead of returning a new array
+        items[:] = merge(merge_sort(left), merge_sort(right))
+        return items[:]
 
 def partition(items, low, high):
     """Return index `p` after in-place partitioning given items in range
@@ -76,20 +76,24 @@ def quick_sort(arr, low=None, high=None):
     # base case in recursive call <=1 because last element is the pivot and poping it 
     if len(arr) <= 1:
         return arr
-    else:
-        # pops first item until len(arr) is 1 or less
-        pivot = arr.pop(0)
-    
-        items_greater = []
-        items_lower = []
+    else:  # not necessary cause when return is run the function stops but helpful to understand
+        # pops and sets first item as pivot _value until len(arr) is 1 or less
+        pivot_value = arr.pop(0)
 
+        # 2 lists for items that are greater or less than pivot
+        items_greater_pivot = []
+        items_lower_pivot = []
+
+        # loop through array to see if element is less or greater than pivot_value and add to proper list
         for num in arr:
-            if num > pivot:
-                items_greater.append(num)
+            if num > pivot_value:
+                items_greater_pivot.append(num)
             else:
-                items_lower.append(num)
-    
-        # just so to get to pass sorting_test.py by mutating original array
-        arr[:] = quick_sort(items_lower) + [pivot] + quick_sort(items_greater)    
+                items_lower_pivot.append(num)
+
+        # arr[:] = just so to get to pass sorting_test.py by mutating original array
+        # recursively calls items_lower_pivot and items_greater_pivot to add to final sorted array. 
+        # each call will have quick_sort(items_lower_pivot) + pivot_value and pivot_value + quick_sort(items_greater_pivot)
+        arr[:] = quick_sort(items_lower_pivot) + [pivot_value] + quick_sort(items_greater_pivot)    
         return arr[:]
 
