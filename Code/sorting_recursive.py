@@ -6,38 +6,39 @@ def merge(items1, items2):
     and return a new list containing all items in sorted order.
     TODO: Running time: ??? Why and under what conditions?
     TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Repeat until one list is empty
-    # TODO: Find minimum item in both lists and append it to new list
-    # TODO: Append remaining items in non-empty list to new list
-    result = []
-    index_left = 0
-    index_right = 0
+
+    merge_list = []
+    index_items1 = 0
+    index_items2 = 0
     
-    while index_left < len(items1) and index_right < len(items2):
-        if items1[index_left] < items2[index_right]:
-            result.append(items1[index_left])
-            index_left += 1
+    # comparing both lists and adding the element to the merge_list or know the point where both list are in order, this loop stops when you have completely travase one of the arrays to merge
+    while index_items1 < len(items1) and index_items2 < len(items2):
+        # compare the two sorted arrays, items1 and items2
+        if items1[index_items1] < items2[index_items2]:
+            # element in items1 is smaller than items 2 so append to merge_list
+            merge_list.append(items1[index_items1])
+            index_items1 += 1
         else:
-            result.append(items2[index_right])
-            index_right += 1
+            # element in items1 is greater than items 2 so append element of items2 to list
+            merge_list.append(items2[index_items2])
+            index_items2 += 1
 
-    result.extend(items1[index_left:])
-    result.extend(items2[index_right:])
+    # add whatever is left because in our while loop we stop the moment either the index left or index right is > len(items)
+    merge_list += items1[index_items1:]
+    merge_list += items2[index_items2:]
 
-    return result
+    return merge_list
 
 def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if list is so small it's already sorted (base case)
-    # TODO: Split items list into approximately equal halves
-    # TODO: Sort each half by recursively calling merge sort
-    # TODO: Merge sorted halves into one list in sorted order
+    Running time: O(nlogn) becuase breaking the list down every time; divide and conquer
+    Memory usage: O(n) because calling function resursively so just grows linearyly with input"""
+
     if items == []:
         return items
 
+    # base case in recursive call
     if len(items) == 1:
         return items
 
@@ -62,42 +63,33 @@ def partition(items, low, high):
     # TODO: Move items less than pivot into front of range [low...p-1]
     # TODO: Move items greater than pivot into back of range [p+1...high]
     # TODO: Move pivot item into final position [p] and return index p
-    pivot = items[low]
-    start = low
-    end = high - 1
-
-    while start <= end:
-        while start <= high and items[start] < pivot:
-            start += 1
-        while end >= start and items[end] >= pivot:
-            end -= 1
-        if start < end:
-            items[end], items[start] = items[start], items[end]
-        else:
-            items[high], items[start] = items[start], items[high]
-
-    return end
+    pass
 
 
 def quick_sort(arr, low=None, high=None):
     """Sort given items in place by partitioning items in range `[low...high]`
     around a pivot item and recursively sorting each remaining sublist range.
-    TODO: Best case running time: ??? Why and under what conditions?
-    TODO: Worst case running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
-    # TODO: Check if high and low range bounds have default values (not given)
-    # TODO: Check if list or range is so small it's already sorted (base case)
-    # TODO: Partition items in-place around a pivot and get index of pivot
-    # TODO: Sort each sublist range by recursively calling quick sort
+    Best case running time: O(nlogn) because your unsort list gets smaller and smaller with each recursive call
+    Worst case running time: O(n^2) when you pick all high numbers then you need to traverse entire length of array and made only progress sorting on that highest number.
+    Memory usage: O(n) because calling function recursively"""
+
+    # base case in recursive call <=1 because last element is the pivot and poping it 
+    if len(arr) <= 1:
+        return arr
+    else:
+        # pops first item until len(arr) is 1 or less
+        pivot = arr.pop(0)
     
-    # low = 0
-    # high = len(items) - 1
+        items_greater = []
+        items_lower = []
 
-    # if low >= high:
-    #     return
-
-    # if low < high:
-    #     loc = partition(items, low, high)
-    #     quick_sort(items, low, loc - 1)
-    #     quick_sort(items, loc + 1, high)
+        for num in arr:
+            if num > pivot:
+                items_greater.append(num)
+            else:
+                items_lower.append(num)
+    
+        # just so to get to pass sorting_test.py by mutating original array
+        arr[:] = quick_sort(items_lower) + [pivot] + quick_sort(items_greater)    
+        return arr[:]
 
