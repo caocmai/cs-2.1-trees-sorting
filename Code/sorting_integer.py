@@ -1,5 +1,6 @@
 #!python
 
+from sorting_iterative import insertion_sort
 
 def counting_sort(numbers):
     """Sort given numbers (integers) by counting occurrences of each number,
@@ -17,7 +18,7 @@ def counting_sort(numbers):
             temp_array[num] = 1
         else:
             temp_array[num] += 1
-            
+
     numbers = []
 
     for y in range(len(temp_array)):
@@ -27,6 +28,11 @@ def counting_sort(numbers):
 
     return numbers
 
+def bucket_index_formula(num, numbers):
+    maximum_number = max(numbers)
+    bucket_index = num * len(numbers) / (maximum_number + 1)
+
+    return int(bucket_index)
 
 def bucket_sort(numbers, num_buckets=10):
     """Sort given numbers by distributing into buckets representing subranges,
@@ -39,3 +45,23 @@ def bucket_sort(numbers, num_buckets=10):
     # TODO: Sort each bucket using any sorting algorithm (recursive or another)
     # TODO: Loop over buckets and append each bucket's numbers into output list
     # FIXME: Improve this to mutate input instead of creating new output list
+
+    buckets = []
+    for _ in range(num_buckets):
+        buckets.append([])
+
+    for num in numbers:
+        b_index = bucket_index_formula(num, numbers)
+        buckets[b_index].append(num)
+        insertion_sort(buckets[b_index])
+
+    sorted_list = []
+    for i in buckets:
+        if i != []:
+            sorted_list.extend(i)
+    return sorted_list
+        
+test = [2,22,5,3,4,400, 34, 234, 54, 34]
+
+
+print(bucket_sort(test))
