@@ -5,8 +5,8 @@ from sorting_iterative import insertion_sort
 def counting_sort(numbers):
     """Sort given numbers (integers) by counting occurrences of each number,
     then looping over counts and copying that many numbers into output list.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n + k) where k is the range of numbers, because if k is really high then affects the run time significantly. 
+    Memory usage: O(k) because the number of total arrays is equal to the value of k"""
     # TODO: Find range of given numbers (minimum and maximum integer values)
     # TODO: Create list of counts with a slot for each number in input range
     # TODO: Loop over given numbers and increment each number's count
@@ -35,6 +35,7 @@ def counting_sort(numbers):
 
     return numbers
 
+# bucket index formula from https://www.cs.usfca.edu/~galles/visualization/BucketSort.html
 def bucket_index_formula(num, numbers):
     maximum_number = max(numbers)
     bucket_index = num * len(numbers) / (maximum_number + 1)
@@ -44,8 +45,9 @@ def bucket_index_formula(num, numbers):
 def bucket_sort(numbers, num_buckets=10):
     """Sort given numbers by distributing into buckets representing subranges,
     then sorting each bucket and concatenating all buckets in sorted order.
-    TODO: Running time: ??? Why and under what conditions?
-    TODO: Memory usage: ??? Why and under what conditions?"""
+    Running time: O(n+k) where k is the number of buckets. The time complexity is depended on both
+    n and k because if k is large then our algorithm is also increased
+    Memory usage: O(n) because as the n increases the space increases linearly, we are not doing processes in place so space is increased with n"""
     # TODO: Find range of given numbers (minimum and maximum values)
     # TODO: Create list of buckets to store numbers in subranges of input range
     # TODO: Loop over given numbers and place each item in appropriate bucket
@@ -60,12 +62,11 @@ def bucket_sort(numbers, num_buckets=10):
 
     # loop through all the numbers
     for num in numbers:
-        # determin the bucket index
+        # determine the bucket index
         b_index = bucket_index_formula(num, numbers)
         # add to bucket
         buckets[b_index].append(num)
-        # sort bucket
-        insertion_sort(buckets[b_index])
+        # note: ultimately we want to sort this list but we will do that later
 
     # initialize empty bucket list
     complete_sorted_list = []
@@ -73,10 +74,7 @@ def bucket_sort(numbers, num_buckets=10):
     for array in buckets:
         # extend the list of the bucket into the complete sorted list if it's not empty
         if array != []:
+            # sort then extend to completed_sorted_list 
+            insertion_sort(array)
             complete_sorted_list.extend(array)
     return complete_sorted_list
-        
-test = [2,22,5,3,4,400, 34, 234, 54, 34]
-
-
-print(bucket_sort(test))

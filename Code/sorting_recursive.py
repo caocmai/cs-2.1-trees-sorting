@@ -33,7 +33,7 @@ def merge_sort(items):
     """Sort given items by splitting list into two approximately equal halves,
     sorting each recursively, and merging results into a list in sorted order.
     Running time: O(nlogn) because breaking the list down every recursive call; divide and conquer
-    Memory usage: O(n) because calling function resursively so just grows linearyly with input"""
+    Memory usage: O(n) because calling function resursively so just grows linearly with input"""
 
     if items == []:
         return items
