@@ -12,16 +12,23 @@ def counting_sort(numbers):
     # TODO: Loop over given numbers and increment each number's count
     # TODO: Loop over counts and append that many numbers into output list
     # FIXME: Improve this to mutate input instead of creating new output list
+
+    # creating a temp array with [0] times howevery many based on the max value of numbers
     temp_array = [0] * (max(numbers) + 1)
+    # loop through numbers
     for num in numbers:
+        # if the temp array's index of that number is 0 - meaning it's empty then set it to be 1
         if temp_array[num] == 0:
             temp_array[num] = 1
+        # else there's already something in there so just add one to it
         else:
             temp_array[num] += 1
 
     numbers = []
 
+    # loop through the temp_array
     for y in range(len(temp_array)):
+        # if it's index is not equal to 0 then we add the count; and looping until it's index value is 0
         while temp_array[y] != 0:
             numbers.append(y)
             temp_array[y] -= 1
@@ -46,20 +53,28 @@ def bucket_sort(numbers, num_buckets=10):
     # TODO: Loop over buckets and append each bucket's numbers into output list
     # FIXME: Improve this to mutate input instead of creating new output list
 
+    # creating the buckets, in this case it's a list within a list
     buckets = []
     for _ in range(num_buckets):
         buckets.append([])
 
+    # loop through all the numbers
     for num in numbers:
+        # determin the bucket index
         b_index = bucket_index_formula(num, numbers)
+        # add to bucket
         buckets[b_index].append(num)
+        # sort bucket
         insertion_sort(buckets[b_index])
 
-    sorted_list = []
-    for i in buckets:
-        if i != []:
-            sorted_list.extend(i)
-    return sorted_list
+    # initialize empty bucket list
+    complete_sorted_list = []
+    # loop through bucket list with lists
+    for array in buckets:
+        # extend the list of the bucket into the complete sorted list if it's not empty
+        if array != []:
+            complete_sorted_list.extend(array)
+    return complete_sorted_list
         
 test = [2,22,5,3,4,400, 34, 234, 54, 34]
 
