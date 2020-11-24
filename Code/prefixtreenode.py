@@ -32,7 +32,7 @@ class PrefixTreeNode:
     def has_child(self, character):
         """Return True if this prefix tree node has a child node that
         represents the given character amongst its children."""
-        if self.num_children > 0:
+        if self.num_children() > 0:
             for child in self.children:
                 if child.character == character:
                     return True
@@ -52,8 +52,8 @@ class PrefixTreeNode:
         """Add the given character and child node as a child of this node, or
         raise ValueError if given character is amongst this node's children."""
         if not self.has_child(character):
-            # TODO: Add given character and child node to this node's children
-            ...
+            child_node.character = character
+            self.children.append(child_node)
         else:
             raise ValueError(f'Child exists for character {character!r}')
 
