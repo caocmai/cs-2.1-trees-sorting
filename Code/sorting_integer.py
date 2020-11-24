@@ -46,7 +46,7 @@ def bucket_sort(numbers, num_buckets=10):
     """Sort given numbers by distributing into buckets representing subranges,
     then sorting each bucket and concatenating all buckets in sorted order.
     Running time: O(n+k) where k is the number of buckets. The time complexity is depended on both
-    n and k because if k is large then our algorithm is also increased
+    n and k because if k is large then our algorithm is also increased because we have to traverse the buckets
     Memory usage: O(n) because as the n increases the space increases linearly, we are not doing processes in place so space is increased with n"""
     # TODO: Find range of given numbers (minimum and maximum values)
     # TODO: Create list of buckets to store numbers in subranges of input range
