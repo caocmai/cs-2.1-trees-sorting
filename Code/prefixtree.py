@@ -36,6 +36,9 @@ class PrefixTree:
     def is_empty(self):
         """Return True if this prefix tree is empty (contains no strings)."""
         # TODO
+        if self.size == 0:
+            return True
+        return False
 
     def contains(self, string):
         """Return True if this prefix tree contains the given string."""
@@ -44,6 +47,20 @@ class PrefixTree:
     def insert(self, string):
         """Insert the given string into this prefix tree."""
         # TODO
+        current_node = self.root
+
+        for char in string:
+            if current_node.has_child(char):
+                current_node = current_node.get_child(char)
+            else:
+                new_node = PrefixTreeNode(char)
+                current_node.add_child(char, new_node)
+                current_node = current_node.get_child(char)
+                # current_node.is_terminal = False
+
+        if current_node.is_terminal == False:
+            self.size += 1
+            current_node.is_terminal = True
 
     def _find_node(self, string):
         """Return a pair containing the deepest node in this prefix tree that

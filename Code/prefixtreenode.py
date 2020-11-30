@@ -17,6 +17,7 @@ class PrefixTreeNode:
         # Character that this node represents
         self.character = character
         # Data structure to associate character keys to children node values
+        # ask the syntax for this; what does this mean?
         self.children = PrefixTreeNode.CHILDREN_TYPE()
         # Marks if this node terminates a string in the prefix tree
         self.terminal = False
@@ -53,6 +54,7 @@ class PrefixTreeNode:
         raise ValueError if given character is amongst this node's children."""
         if not self.has_child(character):
             child_node.character = character
+            child_node.is_terminal = False
             self.children.append(child_node)
         else:
             raise ValueError(f'Child exists for character {character!r}')
