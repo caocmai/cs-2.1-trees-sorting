@@ -100,6 +100,10 @@ class PrefixTree:
         if node.is_terminal():
             completions.append(prefix)
 
+        if prefix != '':
+            if not self.root.has_child(prefix[0]):
+                return []
+
         for child in node.children:
             self._traverse(child, (prefix + child.character), completions.append)
 

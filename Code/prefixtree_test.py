@@ -222,23 +222,23 @@ class PrefixTreeTest(unittest.TestCase):
         assert tree.complete('AB') == ['ABC', 'ABD']
 
         assert tree.complete('BC') == []
-        # assert tree.complete('BD') == []
+        assert tree.complete('BD') == []
 
         assert tree.complete('A') == ['A', 'ABC', 'ABD']
 
-        # assert tree.complete('B') == []
-        # assert tree.complete('C') == []
-        # assert tree.complete('D') == []
+        assert tree.complete('B') == []
+        assert tree.complete('C') == []
+        assert tree.complete('D') == []
 
         assert tree.complete('XYZ') == ['XYZ']
         assert tree.complete('XY') == ['XYZ']
 
-        # assert tree.complete('YZ') == []
+        assert tree.complete('YZ') == []
         
         assert tree.complete('X') == ['XYZ']
 
-        # assert tree.complete('Y') == []
-        # assert tree.complete('Z') == []
+        assert tree.complete('Y') == []
+        assert tree.complete('Z') == []
 
     def test_strings(self):
         tree = PrefixTree()
