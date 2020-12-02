@@ -44,6 +44,7 @@ class PrefixTree:
         current_node = self.root
 
         for char in string:
+            # using try and except here because .get_child raises a ValueError if not found
             try:
                 current_node = current_node.get_child(char)
             except:
@@ -56,11 +57,13 @@ class PrefixTree:
         current_node = self.root
 
         for char in string:
+            # we add a node if not found in current node's children
             if not current_node.has_child(char):
                 new_node = PrefixTreeNode(char)
                 current_node.add_child(char, new_node)
             current_node = current_node.get_child(char)
 
+        # only want to increment size if terminal is not False
         if not current_node.is_terminal():
             self.size += 1
             current_node.terminal = True
@@ -77,6 +80,8 @@ class PrefixTree:
         node = self.root
         depth = 0
         for char in string:
+            # runs the entirty of the string to get the last node; we are assuming 
+            # that the string is a valid word in tree
             if node.has_child(char):
                 node = node.get_child(char)
                 depth += 1
@@ -98,6 +103,8 @@ class PrefixTree:
             return completions
 
         for child in node.children:
+            # traverse on each child with the prefix as the prefix plus the child
+            # node character, and the completion is appending to the completions array
             self._traverse(child, (prefix + child.character), completions.append)
 
         return completions
@@ -107,13 +114,15 @@ class PrefixTree:
         # Create a list of all strings in prefix tree
 
         all_strings = []
+        # since we want all valid words or strings in the tree we start with the root node
+        # with the prefix as empty or '', and then we append that to all_strings as our completion
         self._traverse(self.root, '', all_strings.append)
         return all_strings
 
         # OR but need to activate line 98
         # return self.complete('')
 
-    # helper function
+    # helper function to traverse the nodes
     def _traverse(self, node, prefix, visit):
         """Traverse this prefix tree with recursive depth-first traversal.
         Start at the given node with the given prefix representing its path in
@@ -124,6 +133,7 @@ class PrefixTree:
 
         if len(node.children) > 0:
             for child in node.children:
+                # we are recursively calling this function until we reach terminal or when children doesn't exist
                 self._traverse(child, (prefix + child.character), visit)
 
 

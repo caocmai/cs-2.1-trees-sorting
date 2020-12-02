@@ -8,10 +8,7 @@ def counting_sort(numbers):
     Running time: O(n + k) where k is the range of numbers, because if k is really high then affects the run time significantly. 
     Memory usage: O(k) because the number of total arrays is equal to the value of k"""
 
-    # the baisc concept of counting sort is creating a very large array and then assoiating each value in the list to be sorted to the temp's array index. For example, if you wanted to sort 3, 1, 2 to 1,2,3 then 3 is 3rd index, 2=2nd index, 1=1st index
-    # drawback - negative numbers doesn't currently work.
-
-    # creating a temp array with 0, times howevery many based on the max value of numbers + 1
+    # creating a temp array with 0, times however many based on the max value of numbers + 1 b/c indexing starts at 1
     temp_array = [0] * (max(numbers) + 1)
     # loop through numbers
     for num in numbers:
