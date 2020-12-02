@@ -7,13 +7,11 @@ def counting_sort(numbers):
     then looping over counts and copying that many numbers into output list.
     Running time: O(n + k) where k is the range of numbers, because if k is really high then affects the run time significantly. 
     Memory usage: O(k) because the number of total arrays is equal to the value of k"""
-    # TODO: Find range of given numbers (minimum and maximum integer values)
-    # TODO: Create list of counts with a slot for each number in input range
-    # TODO: Loop over given numbers and increment each number's count
-    # TODO: Loop over counts and append that many numbers into output list
-    # FIXME: Improve this to mutate input instead of creating new output list
 
-    # creating a temp array with [0] times howevery many based on the max value of numbers
+    # the baisc concept of counting sort is creating a very large array and then assoiating each value in the list to be sorted to the temp's array index. For example, if you wanted to sort 3, 1, 2 to 1,2,3 then 3 is 3rd index, 2=2nd index, 1=1st index
+    # drawback - negative numbers doesn't currently work.
+
+    # creating a temp array with 0, times howevery many based on the max value of numbers + 1
     temp_array = [0] * (max(numbers) + 1)
     # loop through numbers
     for num in numbers:
@@ -48,12 +46,6 @@ def bucket_sort(numbers, num_buckets=10):
     Running time: O(n+k) where k is the number of buckets. The time complexity is depended on both
     n and k because if k is large then our algorithm is also increased because we have to traverse the buckets
     Memory usage: O(n) because as the n increases the space increases linearly, we are not doing processes in place so space is increased with n"""
-    # TODO: Find range of given numbers (minimum and maximum values)
-    # TODO: Create list of buckets to store numbers in subranges of input range
-    # TODO: Loop over given numbers and place each item in appropriate bucket
-    # TODO: Sort each bucket using any sorting algorithm (recursive or another)
-    # TODO: Loop over buckets and append each bucket's numbers into output list
-    # FIXME: Improve this to mutate input instead of creating new output list
 
     # creating the buckets, in this case it's a list within a list
     buckets = []
@@ -62,7 +54,7 @@ def bucket_sort(numbers, num_buckets=10):
 
     # loop through all the numbers
     for num in numbers:
-        # determine the bucket index
+        # determine the bucket index; using a given formula
         b_index = bucket_index_formula(num, numbers)
         # add to bucket
         buckets[b_index].append(num)

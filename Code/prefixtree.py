@@ -56,12 +56,10 @@ class PrefixTree:
         current_node = self.root
 
         for char in string:
-            if current_node.has_child(char):
-                current_node = current_node.get_child(char)
-            else:
+            if not current_node.has_child(char):
                 new_node = PrefixTreeNode(char)
                 current_node.add_child(char, new_node)
-                current_node = current_node.get_child(char)
+            current_node = current_node.get_child(char)
 
         if not current_node.is_terminal():
             self.size += 1
@@ -115,13 +113,14 @@ class PrefixTree:
         # OR but need to activate line 98
         # return self.complete('')
 
-    # where is the visit function from??
+    # helper function
     def _traverse(self, node, prefix, visit):
         """Traverse this prefix tree with recursive depth-first traversal.
         Start at the given node with the given prefix representing its path in
         this prefix tree and visit each node with the given visit function."""
+        # like base case 
         if node.is_terminal():
-            visit(prefix)
+            visit(prefix) # append function
 
         if len(node.children) > 0:
             for child in node.children:
