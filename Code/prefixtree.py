@@ -35,16 +35,14 @@ class PrefixTree:
 
     def is_empty(self):
         """Return True if this prefix tree is empty (contains no strings)."""
-        if self.size == 0:
-            return True
-        return False
+        return self.size == 0
 
     def contains(self, string):
         """Return True if this prefix tree contains the given string."""
         current_node = self.root
 
         for char in string:
-            # using try and except here because .get_child raises a ValueError if not found
+            # using try and except here because get_child method raises a ValueError if not found
             try:
                 current_node = current_node.get_child(char)
             except:
@@ -60,7 +58,7 @@ class PrefixTree:
             # we add a node if not found in current node's children
             if not current_node.has_child(char):
                 new_node = PrefixTreeNode(char)
-                current_node.add_child(char, new_node)
+                current_node.add_child(new_node)
             current_node = current_node.get_child(char)
 
         # only want to increment size if terminal is not False
@@ -79,8 +77,9 @@ class PrefixTree:
         # Start with the root node
         node = self.root
         depth = 0
+
         for char in string:
-            # runs the entirty of the string to get the last node; we are assuming 
+            # runs the entirety of the string to get the last node; we are assuming 
             # that the string is a valid word in tree
             if node.has_child(char):
                 node = node.get_child(char)
@@ -92,9 +91,10 @@ class PrefixTree:
         with the given prefix string."""
         # Create a list of completions in prefix tree
         completions = []
-        # find last node
+        # find last(deepest) node
         node = self._find_node(prefix)[0]
 
+        # if node is terminal we append the prefix because the last node of the prefix is terminal it's a valid string
         if node.is_terminal():
             completions.append(prefix)
 
@@ -112,7 +112,6 @@ class PrefixTree:
     def strings(self):
         """Return a list of all strings stored in this prefix tree."""
         # Create a list of all strings in prefix tree
-
         all_strings = []
         # since we want all valid words or strings in the tree we start with the root node
         # with the prefix as empty or '', and then we append that to all_strings as our completion
@@ -129,7 +128,7 @@ class PrefixTree:
         this prefix tree and visit each node with the given visit function."""
         # like base case 
         if node.is_terminal():
-            visit(prefix) # append function
+            visit(prefix) # append function, and append our prefix based on traverse
 
         if len(node.children) > 0:
             for child in node.children:
