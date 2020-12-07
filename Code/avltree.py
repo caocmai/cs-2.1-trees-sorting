@@ -163,18 +163,35 @@ class AVLTree(object):
             self.printHelper(currPtr.left, indent, False)
             self.printHelper(currPtr.right, indent, True)
 
+    def find(self, value, root):
+        if root != None:
+            return self._find(value, root)
+        else:
+            return None
+        
+    def _find(self, value, current_node):
+        if value == current_node.value:
+            return current_node
+        elif value < current_node.value and current_node.left != None:
+            return self._find(value, current_node.left)
+        elif value > current_node.value and current_node.right != None:
+            return self._find(value, current_node.right)
 
 
 myTree = AVLTree()
 root = None
-nums = [33, 13, 52, 9, 21, 61, 8, 11]
+nums = []
+for i in range(100):
+    nums.append(i)
 for num in nums:
     root = myTree.insert_node(root, num)
 myTree.printHelper(root, "", True)
-key = 13
-root = myTree.delete_node(root, key)
-print("After Deletion: ")
-myTree.printHelper(root, "", True)
+test = myTree.find(38, root)
+print(test)
+# key = 13
+# root = myTree.delete_node(root, key)
+# print("After Deletion: ")
+# myTree.printHelper(root, "", True)
 
 
 
