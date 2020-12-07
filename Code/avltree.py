@@ -25,11 +25,29 @@ class AVLTree(object):
         # get balance factor and balance tree
         balance_factor = self.get_balance_factor(root)
 
+        if balance_factor > 1:
+            if value < root.left.value:
+                return self.right_rotate(root)
+            else:
+                root.left = self.left_rotate(root.left)
+                return self.right_rotate(root)
+        if balance_factor < -1:
+            if value > root.right.value:
+                return self.left_rotate(root)
+            else:
+                root.right = self.right_rotate(root.right)
+                return self.left_rotate(root)
+
     
     def get_height(self, root):
         if not root:
             return 0
         return root.height
+
+    def get_balance_factor(self, root):
+        if not root:
+            return 0
+        return self.get_height(root.left) - self.get_height(root.right)
 
 
 
