@@ -71,20 +71,69 @@ class AVLTree(object):
         # return new root node
         return y
     
+    # right rotate
     def right_rotate(self, z):
         y = z.left
         T3 = y.right
 
+        # swapping
         y.right = z
         z.left = T3
 
+        # updating heights
         z.height = 1 + max(self.get_height(z.left), self.get_height(z.right))
         y.height = 1 + max(self.get_height(y.left), self.get_height(y.right))
 
+        # return new root node
         return y
 
+    def delete_node(self, root, value):
+        if not root:
+            return root
+        elif value < root.value:
+            root.left = self.delete_node(root.left ,value)
+        elif key > root.key:
+            root.right = self.delete_node(root.right, key)
+
+        else:
+            if root.left is None:
+                # return right node and set root node to None if root.left doesn't exist
+                temp_node = root.right
+                root = None
+                return temp_node
+            elif root.right is None:
+                temp_node = root.left
+                root = None
+                return temp_node
+            temp_node = self.get_min_value_node(root.right)
+
+    # recursive method to get node with smallest value
+    def get_min_value_node(self, root):
+        if root is None or root.left is None:
+            return root
+        return self.get_min_value_node(root.left)
+
+    def printHelper(self, currPtr, indent, last):
+        if currPtr != None:
+            sys.stdout.write(indent)
+            if last:
+                sys.stdout.write("R--")
+                indent += "     "
+            else:
+                sys.stdout.write("L--")
+                indent += "|    "
+            print(currPtr.value)
+            self.printHelper(currPtr.left, indent, False)
+            self.printHelper(currPtr.right, indent, True)
 
 
+
+myTree = AVLTree()
+root = None
+nums = [33, 13, 52, 9, 21, 61, 8, 11, 2, 5, 19]
+for num in nums:
+    root = myTree.insert_node(root, num)
+myTree.printHelper(root, "", True)
 
 
 
