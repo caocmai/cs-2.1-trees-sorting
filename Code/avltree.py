@@ -10,6 +10,9 @@ class TreeNode(object):
         self.height = 1
 
 class AVLTree(object):
+    """
+    Time Complexity: O(logN)
+    """
     
     def insert_node(self, root, value):
         # find the proper location in tree to add node 
@@ -28,12 +31,14 @@ class AVLTree(object):
 
         # if balance_factor difference is greater than 1 then need to rotate
         if balance_factor > 1:
+            # comparing values
             if value < root.left.value:
                 return self.right_rotate(root)
             else:
                 # you have to rotate twice 
                 root.left = self.left_rotate(root.left)
                 return self.right_rotate(root)
+
         if balance_factor < -1:
             if value > root.right.value:
                 return self.left_rotate(root)
@@ -91,9 +96,9 @@ class AVLTree(object):
         if not root:
             return root
         elif value < root.value:
-            root.left = self.delete_node(root.left ,value)
-        elif key > root.key:
-            root.right = self.delete_node(root.right, key)
+            root.left = self.delete_node(root.left, value)
+        elif value > root.value:
+            root.right = self.delete_node(root.right, value)
 
         else:
             if root.left is None:
@@ -106,6 +111,37 @@ class AVLTree(object):
                 root = None
                 return temp_node
             temp_node = self.get_min_value_node(root.right)
+            # set root value to lowest
+            root.value = temp_node.value
+
+            root.right = self.delete_node(root.right, temp_node.value)
+
+        if root == None:
+            return root
+
+        # update and get balance factor
+        root.height = 1 + max(self.get_height(root.left), self.get_height(root.right))
+
+        balance_factor = self.get_balance_factor(root)
+
+        # balance tree
+        if balance_factor > 1:
+            if self.get_balance_factor(root.left) >= 0:
+                return self.right_rotate(root)
+            else:
+                # rotate twice to balance
+                root.left = self.left_rotate(root.left)
+                return self.right_rotate(root)
+        
+        if balance_factor < -1:
+            if self.get_balance_factor(root.right) <= 0:
+                return self.left_rotate(root)
+            else:
+                root.right = self.right_rotate(root.right)
+                return self.left_rotate(root)
+        
+        return root
+
 
     # recursive method to get node with smallest value
     def get_min_value_node(self, root):
@@ -130,9 +166,13 @@ class AVLTree(object):
 
 myTree = AVLTree()
 root = None
-nums = [33, 13, 52, 9, 21, 61, 8, 11, 2, 5, 19]
+nums = [33, 13, 52, 9, 21, 61, 8, 11]
 for num in nums:
     root = myTree.insert_node(root, num)
+myTree.printHelper(root, "", True)
+key = 13
+root = myTree.delete_node(root, key)
+print("After Deletion: ")
 myTree.printHelper(root, "", True)
 
 
