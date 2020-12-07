@@ -93,6 +93,7 @@ class AVLTree(object):
         return y
 
     def delete_node(self, root, value):
+        # there no root node returns None or 
         if not root:
             return root
         elif value < root.value:
